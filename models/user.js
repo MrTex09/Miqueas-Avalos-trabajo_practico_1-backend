@@ -1,14 +1,24 @@
-import { checkSchema } from "express-validator";
+const { DataTypes, sequelize } = require("../database");
 
-export const createUserSchema = checkSchema({
-  email: {
-    errorMessage: "Invalid email",
-    isEmail: true,
+const usuario = sequelize.define("usuario", {
+  nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
   },
-  password: {
-    isLength: {
-      options: { min: 8 },
-      errorMessage: "Password should be at least 8 chars",
-    },
+  contraseña: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+
+  email: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
   },
 });
+
+// Crear tabla si no existe ({force: true} borra y crea la tabla)
+user.sync({ force: false }).then(() => {
+  console.log("Tabla de usuarios creada");
+});
+
+module.exports = user;

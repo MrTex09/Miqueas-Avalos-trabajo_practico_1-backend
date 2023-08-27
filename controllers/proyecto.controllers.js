@@ -7,7 +7,6 @@ ctrlProyecto.crearProyecto = async (req, res) => {
 
   try {
     const newProyecto = new Proyecto({
-      id,
       titulo,
       descripcion,
     });

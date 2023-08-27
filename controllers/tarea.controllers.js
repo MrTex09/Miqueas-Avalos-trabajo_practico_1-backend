@@ -7,7 +7,6 @@ ctrltarea.crearTarea = async (req, res) => {
 
   try {
     const newTarea = new Tarea({
-      id,
       designacion,
       detalle,
     });

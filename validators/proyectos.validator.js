@@ -1,17 +1,16 @@
 const { chek } = require("express-validator");
 const { validateResult } = require("../helper/validatorHelper");
-//TODO:para crear 1 usuario
-const validateCreate = [
-  //TODO:nombre,email,contraseña
+//TODO:para crear 1 proyecto
+const validateCreateProyecto = [
+  //TODO:nombre,descrpcion
   chek("nombre").exists().not().isLength({ min: 3 }).isEmpty(),
-  chek("contraeña").exists().not().isEmpty(),
-  chek("email").exists().not().isEmpty().isEmail(),
+  chek("descripcion").exists().not().isEmpty(),
   (req, res, next) => {
     validateResult(req, res, next);
   },
 ];
-//TODO:para obtener un usuario
-const validateobterner = [
+//TODO:para obtener un proyecto
+const validateobternerProyecto = [
   [
     // Validar el parámetro de consulta 'id'
     query("id").isInt().withMessage("El ID debe ser un número entero"),
@@ -20,8 +19,8 @@ const validateobterner = [
     validateResult(req, res, next);
   },
 ];
-//TODO:para obtener usuarios
-const validateobterners = [
+//TODO:para obtener proyectos
+const validateobternersProyecto = [
   [
     // Validar el parámetro de consulta 'id'
     query("id").isInt().withMessage("El ID debe ser un número entero"),
@@ -32,7 +31,7 @@ const validateobterners = [
 ];
 
 //TODO:para  actualizar
-const validateEditar = [
+const validateEditarProyecto = [
   [
     // Validar el parámetro de ruta 'id'
     param("id").isInt().withMessage("El ID debe ser un número entero"),
@@ -41,8 +40,8 @@ const validateEditar = [
     validateResult(req, res, next);
   },
 ];
-//TODO:para eliminar usuarios
-const validateEliminar = [
+//TODO:para eliminar proyectos
+const validateEliminarProyecto = [
   [
     // Validar el parámetro de ruta 'id'
     param("id").isInt().withMessage("El ID debe ser un número entero"),
@@ -54,9 +53,9 @@ const validateEliminar = [
 ];
 
 module.exports = {
-  validateCreate,
-  validateobterner,
-  validateobterners,
-  validateEditar,
-  validateEliminar,
+  validateCreateProyecto,
+  validateobternerProyecto,
+  validateobternersProyecto,
+  validateEditarProyecto,
+  validateEliminarProyecto,
 };

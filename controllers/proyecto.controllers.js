@@ -3,11 +3,12 @@ const ctrlProyecto = {};
 
 // Crear
 ctrlProyecto.crearProyecto = async (req, res) => {
-  const { nombre, descripcion } = req.body;
+  const { titulo, descripcion } = req.body;
 
   try {
     const newProyecto = new Proyecto({
-      nombre,
+      id,
+      titulo,
       descripcion,
     });
 

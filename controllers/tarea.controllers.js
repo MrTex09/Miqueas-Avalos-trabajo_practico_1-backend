@@ -2,17 +2,18 @@ const tarea = require("../models/tareas");
 const ctrltarea = {};
 
 // Crear
-ctrltarea.creartarea = async (req, res) => {
-  const { nombre, descripcion } = req.body;
+ctrltarea.crearTarea = async (req, res) => {
+  const { designacion, detalle } = req.body;
 
   try {
-    const newtarea = new tarea({
-      nombre,
-      descripcion,
+    const newTarea = new Tarea({
+      id,
+      designacion,
+      detalle,
     });
 
     // Se guarda en la BD
-    await newtarea.save();
+    await newTarea.save();
 
     return res.status(201).json({ message: "tarea creada con éxito" });
   } catch (error) {
@@ -21,7 +22,7 @@ ctrltarea.creartarea = async (req, res) => {
   }
 };
 // obtener varias
-ctrltarea.obtenertareas = async (req, res) => {
+ctrltarea.obtenerTareas = async (req, res) => {
   try {
     const tareas = await tarea.findAll({
       where: {
@@ -38,7 +39,7 @@ ctrltarea.obtenertareas = async (req, res) => {
   }
 };
 //obter una
-ctrltarea.obtenertarea = async (req, res) => {
+ctrltarea.obtenerTarea = async (req, res) => {
   try {
     const { id } = req.params;
     const tarea = await tarea.findByPk(id);

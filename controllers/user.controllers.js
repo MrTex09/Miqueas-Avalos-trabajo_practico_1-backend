@@ -7,6 +7,7 @@ ctrlUser.crearUser = async (req, res) => {
 
   try {
     const newUser = new user({
+      id,
       nombre,
       contraseña,
       email,

@@ -1,11 +1,16 @@
 const { DataTypes, sequelize } = require("../database");
 const proyecto = require("./proyectos");
 const tarea = sequelize.define("tareas", {
-  nombre: {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  designacion: {
     type: DataTypes.STRING(100),
     allowNull: false,
   },
-  decripcion: {
+  detalle: {
     type: DataTypes.STRING(100),
     allowNull: false,
   },

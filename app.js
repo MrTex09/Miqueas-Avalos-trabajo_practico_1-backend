@@ -18,12 +18,9 @@ const port = process.env.PORT || 4500;
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-//app.use(express.urlencoded({extended: true}));
+app.use(helmet({ contentSegurityPolicy: false }));
 
 // Routes
-app.use(require("./routes/user.routes"));
-app.use(require("./routes/proyectos.routes"));
-app.use(require("./routes/tarea.routes"));
-
+app.use(require("./routes/routes"));
 // Starting the server
 app.listen(port, () => console.log(`Server on port ${port}`));

@@ -1,23 +1,18 @@
 // TODO: Importar controladores de proyectos, luego vincular rutas con controladores
 
-const { Router } = require("express");
-const router = Router();
+const express = require("express");
+const router = express.Router();
 const {
-  crearproyecto,
-  obtenerproyectos,
-  obtenerproyecto,
+  crearProyecto,
+  obtenerProyectos,
+  obtenerProyecto,
 } = require("../controllers/proyecto.controllers");
-const {
-  validateCreateProyecto,
-  validateobternerProyecto,
-  validateobternersProyecto,
-} = require("../validators/proyectos.validator");
+const { validateCreateProyecto } = require("../validators/proyectos.validator");
 
 // Crear una proyecto
-router.post("/proyecto", validateCreateProyecto, crearproyecto);
+router.post("/proyecto", validateCreateProyecto, crearProyecto);
 //obtener un usuario
-router.get("/proyecto/:id", validateobternerProyecto, obtenerproyecto);
-// Obtener todas las proyectos
-router.get("/proyecto", validateobternersProyecto, obtenerproyectos);
-
+router.get("/Proyecto", obtenerProyecto);
+// Obtener todas las Proyectos
+router.get("/Proyectos", obtenerProyectos);
 module.exports = router;

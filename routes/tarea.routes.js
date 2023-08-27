@@ -1,23 +1,18 @@
 // TODO: Importar controladores de tareas, luego vincular rutas con controladores
 
-const { Router } = require("express");
-const router = Router();
+const express = require("express");
+const router = express.Router();
 const {
   creartarea,
   obtenertareas,
   obtenertarea,
 } = require("../controllers/tarea.controllers");
-const {
-  validateCreatetarea,
-  validateobternertarea,
-  validateobternerstarea,
-} = require("../validators/tareas.validator");
+const { validateCreatetarea } = require("../validators/tarea.validators");
 
 // Crear una tarea
 router.post("/tarea", validateCreatetarea, creartarea);
 //obtener un usuario
-router.get("/tarea/:id", validateobternertarea, obtenertarea);
+router.get("/tarea", obtenertarea);
 // Obtener todas las tareas
-router.get("/tarea", validateobternerstarea, obtenertareas);
-
+router.get("/tareas", obtenertareas);
 module.exports = router;

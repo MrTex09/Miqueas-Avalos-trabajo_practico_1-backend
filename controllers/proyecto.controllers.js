@@ -21,7 +21,7 @@ ctrlProyecto.crearProyecto = async (req, res) => {
   }
 };
 // obtener varias
-ctrl.obtenerProyectos = async (req, res) => {
+ctrlProyecto.obtenerProyectos = async (req, res) => {
   try {
     const Proyectos = await Proyecto.findAll({
       where: {
@@ -38,7 +38,7 @@ ctrl.obtenerProyectos = async (req, res) => {
   }
 };
 //obter una
-ctrl.obtenerProyecto = async (req, res) => {
+ctrlProyecto.obtenerProyecto = async (req, res) => {
   try {
     const { id } = req.params;
     const Proyecto = await Proyecto.findByPk(id);

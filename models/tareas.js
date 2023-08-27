@@ -12,11 +12,11 @@ const tarea = sequelize.define("tareas", {
 });
 
 // Crear tabla si no existe ({force: true} borra y crea la tabla)
-tareas.sync({ force: false }).then(() => {
+tarea.sync({ force: false }).then(() => {
   console.log("Tabla de tareas creada");
 });
 
 //relacion
-tareas.belongsto(proyecto);
-proyecto.hasmany(tareas);
-module.exports = tareas;
+tarea.belongsTo(proyecto);
+proyecto.hasMany(tarea);
+module.exports = tarea;

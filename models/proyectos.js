@@ -17,6 +17,6 @@ proyecto.sync({ force: false }).then(() => {
 });
 
 //relacion
-proyecto.belongsto(user);
-user.hasmany(proyecto);
+proyecto.belongsTo(user);
+user.hasMany(proyecto);
 module.exports = proyecto;

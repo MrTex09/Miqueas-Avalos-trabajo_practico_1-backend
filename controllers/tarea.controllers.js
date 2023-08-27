@@ -21,7 +21,7 @@ ctrltarea.creartarea = async (req, res) => {
   }
 };
 // obtener varias
-ctrl.obtenertareas = async (req, res) => {
+ctrltarea.obtenertareas = async (req, res) => {
   try {
     const tareas = await tarea.findAll({
       where: {
@@ -38,7 +38,7 @@ ctrl.obtenertareas = async (req, res) => {
   }
 };
 //obter una
-ctrl.obtenertarea = async (req, res) => {
+ctrltarea.obtenertarea = async (req, res) => {
   try {
     const { id } = req.params;
     const tarea = await tarea.findByPk(id);

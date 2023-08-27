@@ -2,6 +2,7 @@
 
 const { Router } = require("express");
 const { body, param } = require("express-validator");
+const { validateResult } = require("../helper/validatorHelper");
 const router = Router();
 const {
   crearUser,
@@ -10,25 +11,59 @@ const {
   actualizarUser,
   eliminarUser,
 } = require("../controllers/user.controllers");
-const {
-  validateCreate,
-  validateobterner,
-  validateobterners,
-  validateEditar,
-  validateEliminar,
-} = require("../validators/users.validator");
+const { validateCreate } = require("../validators/users.validator");
 
 // Crear una user
 router.post("/user", validateCreate, crearUser);
 //obtener un usuario
-router.get("/user/:id", validateobterner, obtenerUser);
+router.get(
+  "/user/:id",
+  [
+    // Validar el parámetro de ruta 'id'
+    param("id").isInt().withMessage("El ID debe ser un número entero"),
+  ],
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+  obtenerUser
+);
 // Obtener todas las users
-router.get("/user", validateobterners, obtenerUsers);
+router.get(
+  "/user",
+  [
+    // Validar el parámetro de ruta 'id'
+    param("id").isInt().withMessage("El ID debe ser un número entero"),
+  ],
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+  obtenerUsers
+);
 
 // Actualizar una user
-router.put("/usuario/:id", validateEditar, actualizarUser);
+router.put(
+  "/usuario/:id",
+  [
+    // Validar el parámetro de ruta 'id'
+    param("id").isInt().withMessage("El ID debe ser un número entero"),
+  ],
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+  actualizarUser
+);
 
 // Eliminar una user de forma lógica
-router.delete("/user/:id", validateEliminar, eliminarUser);
+router.delete(
+  "/user/:id",
+  [
+    // Validar el parámetro de ruta 'id'
+    param("id").isInt().withMessage("El ID debe ser un número entero"),
+  ],
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+  eliminarUser
+);
 
 module.exports = router;

@@ -22,7 +22,7 @@ ctrlUser.crearUser = async (req, res) => {
   }
 };
 
-ctrl.obtenerUsers = async (req, res) => {
+ctrlUser.obtenerUsers = async (req, res) => {
   try {
     const users = await user.findAll({
       where: {
@@ -39,7 +39,7 @@ ctrl.obtenerUsers = async (req, res) => {
   }
 };
 
-ctrl.obtenerUser = async (req, res) => {
+ctrlUser.obtenerUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await user.findByPk(id);

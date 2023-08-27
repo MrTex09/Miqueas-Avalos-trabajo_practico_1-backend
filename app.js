@@ -4,7 +4,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
-
+require("dotenv").config();
 // Se conecta la Base de Datos
 const { conectarDB } = require("./database");
 
@@ -21,7 +21,9 @@ app.use(express.json());
 //app.use(express.urlencoded({extended: true}));
 
 // Routes
-app.use(require("./routes/reserva.routes"));
+app.use(require("./routes/user.routes"));
+app.use(require("./routes/proyectos.routes"));
+app.use(require("./routes/tarea.routes"));
 
 // Starting the server
 app.listen(port, () => console.log(`Server on port ${port}`));

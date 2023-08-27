@@ -2,7 +2,6 @@
 
 const { Router } = require("express");
 const { body, param } = require("express-validator");
-const { validateResult } = require("../helper/validatorHelper");
 const router = Router();
 const {
   crearUser,
@@ -11,10 +10,32 @@ const {
   actualizarUser,
   eliminarUser,
 } = require("../controllers/user.controllers");
-const { validateCreate } = require("../validators/users.validator");
 
 // Crear una user
-router.post("/user", validateCreate, crearUser);
+router.post(
+  "/usuarios",
+  [
+    body("nombre")
+      .exists()
+      .not()
+      .isLength({ min: 3 })
+      .isEmpty()
+      .withMessage("El nombre es obligatorio"),
+    body("contraseña")
+      .exists()
+      .not()
+      .isLength({ min: 3 })
+      .isEmpty()
+      .withMessage("La contraseña es obligatoria"),
+    body("correo")
+      .exists()
+      .not()
+      .isEmpty()
+      .isEmail()
+      .withMessage("El correo electrónico que se ingreso no es válido"),
+  ],
+  crearUser
+);
 //obtener un usuario
 router.get(
   "/user/:id",

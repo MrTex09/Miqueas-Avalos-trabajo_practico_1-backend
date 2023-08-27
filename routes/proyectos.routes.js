@@ -3,16 +3,30 @@
 const express = require("express");
 const router = express.Router();
 const {
-  crearProyecto,
-  obtenerProyectos,
-  obtenerProyecto,
+  crearproyecto,
+  obtenerproyectos,
+  obtenerproyecto,
 } = require("../controllers/proyecto.controllers");
-const { validateCreateProyecto } = require("../validators/proyectos.validator");
 
 // Crear una proyecto
-router.post("/proyecto", validateCreateProyecto, crearProyecto);
+router.post(
+  "/proyecto",
+  [
+    check("nombre").exists().not().isLength({ min: 3 }).isEmpty(),
+    check("descripcion").exists().not().isEmpty(),
+  ],
+  crearproyecto
+);
 //obtener un usuario
-router.get("/Proyecto", obtenerProyecto);
-// Obtener todas las Proyectos
-router.get("/Proyectos", obtenerProyectos);
+router.get(
+  "/proyecto",
+  [param("id").isInt().withMessage("ID no válida")],
+  obtenerproyecto
+);
+// Obtener todas las proyectos
+router.get(
+  "/proyectos",
+  [param("id").isInt().withMessage("ID de usuario no válido")],
+  obtenerproyectos
+);
 module.exports = router;

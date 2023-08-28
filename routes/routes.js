@@ -1,8 +1,22 @@
-// TODO: Importar controladores de users, luego vincular rutas con controladores
 const express = require("express");
+const {
+  validateDescrpcion,
+  validateTitulo,
+} = require("../validator/proyectoValitor");
+const {
+  validateDetalle,
+  validatedesignacion,
+} = require("../validator/tareaValidator");
+const {
+  validateUserNombre,
+  validateUserContraseña,
+  validateUserEmail,
+} = require("../validator/usuariovalidator");
+const { idValidation } = require("../validator/idValidator");
+const validator = require("../middleware/errores");
 const router = express.Router();
-const { check } = require("express-validator");
-//user
+
+// Importar controladores de usuarios
 const {
   crearUser,
   obtenerUsers,
@@ -10,126 +24,60 @@ const {
   actualizarUser,
   eliminarUser,
 } = require("../controllers/user.controllers");
-//proyecto
+
+// Importar controladores de proyectos
 const {
   crearProyecto,
   obtenerProyectos,
   obtenerProyecto,
 } = require("../controllers/proyecto.controllers");
-//tareas
+
+// Importar controladores de tareas
 const {
   crearTarea,
   obtenerTareas,
   obtenerTarea,
 } = require("../controllers/tarea.controllers");
 
-// Crear una user
+// Rutas relacionadas a usuarios
 router.post(
   "/usuario",
-  [
-    check("nombre")
-      .exists()
-      .not()
-      .isLength({ min: 3 })
-      .isEmpty()
-      .withMessage("El nombre es obligatorio"),
-    check("contraseña")
-      .exists()
-      .not()
-      .isLength({ min: 3 })
-      .isEmpty()
-      .withMessage("La contraseña es obligatoria"),
-    check("correo")
-      .exists()
-      .not()
-      .isEmpty()
-      .isEmail()
-      .withMessage("El correo electrónico que se ingreso no es válido"),
-  ],
+  validateUserNombre,
+  validateUserContraseña,
+  validateUserEmail,
+  validator,
   crearUser
 );
-//obtener un usuario
-router.get(
-  "/usuario/:id",
-  [
-    // Validar el parámetro de ruta 'id'
-    check("id").isInt().withMessage("El ID debe ser un número entero"),
-  ],
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
-  obtenerUser
-);
-// Obtener todas las users
-router.get(
-  "/ususarios",
-  [
-    // Validar el parámetro de ruta 'id'
-    check("id").isInt().withMessage("El ID debe ser un número entero"),
-  ],
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
-  obtenerUsers
-);
-// Actualizar una user
-router.put(
-  "/usuario/:id",
-  [
-    // Validar el parámetro de ruta 'id'
-    check("id").isInt().withMessage("El ID debe ser un número entero"),
-  ],
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
-  actualizarUser
-);
-// Eliminar una user de forma lógica
-router.delete(
-  "/usuario/:id",
-  [
-    // Validar el parámetro de ruta 'id'
-    check("id").isInt().withMessage("El ID debe ser un número entero"),
-  ],
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
-  eliminarUser
-);
 
-//proyecto
-// Crear una proyecto
-router.post("/proyecto", crearProyecto, [
-  check("titulo").exists().not().isLength({ min: 3 }).isEmpty(),
-]);
-//obtener un usuario
-router.get(
+router.get("/usuario/:id", idValidation, validator, obtenerUser);
+router.get("/usuario", obtenerUsers);
+router.put("/usuario/:id", idValidation, validator, actualizarUser);
+router.delete("/Usuario/:id", idValidation, validator, eliminarUser);
+
+// Rutas relacionadas a proyectos
+router.post(
   "/proyecto",
-  [check("id").isInt().withMessage("ID no válida")],
-  obtenerProyecto
-);
-// Obtener todas las proyectos
-router.get(
-  "/proyectos",
-  [check("id").isInt().withMessage("ID de usuario no válido")],
-  obtenerProyectos
+  validateDescrpcion,
+  validateTitulo,
+  validator,
+  crearProyecto
 );
 
-//tareas
-// Crear una tarea
-router.post("/tarea", crearTarea, [
-  check("designacion").exists().not().isLength({ min: 3 }).isEmpty(),
-]);
-//obtener un usuario
-router.get(
+router.get("/proyecto/:id", idValidation, validator, obtenerProyecto);
+
+router.get("/proyecto", obtenerProyectos);
+
+// Rutas relacionadas a tareas
+router.post(
   "/tarea",
-  [check("id").isInt().withMessage("ID no válida")],
-  obtenerTarea
+  validateDetalle,
+  validatedesignacion,
+  validator,
+  crearTarea
 );
-// Obtener todas las tareas
-router.get(
-  "/tareas",
-  [check("id").isInt().withMessage("ID de usuario no válido")],
-  obtenerTareas
-);
+
+router.get("/tarea/:id", idValidation, validator, obtenerTarea);
+
+router.get("/tarea", validator, obtenerTareas);
+
 module.exports = router;

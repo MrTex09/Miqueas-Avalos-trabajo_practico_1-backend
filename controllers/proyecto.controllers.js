@@ -1,54 +1,40 @@
 const Proyecto = require("../models/proyectos");
 const ctrlProyecto = {};
 
-// Crear
+// Crear un Proyectos
 ctrlProyecto.crearProyecto = async (req, res) => {
-  const { titulo, descripcion } = req.body;
-
   try {
-    const newProyecto = new Proyecto({
-      titulo,
-      descripcion,
-    });
-
-    // Se guarda en la BD
-    await newProyecto.save();
-
-    return res.status(201).json({ message: "Proyecto creada con éxito" });
+    const newProyecto = await Proyecto.create(req.body);
+    res.status(201).json(newProyecto);
   } catch (error) {
-    console.log("Error al crear  el Proyecto", error);
-    return res.status(500).json({ message: "Error al crear  al Proyecto" });
+    console.error("Error al crear el Proyectos", error);
+    res.status(500).json({ message: "Error al crear el Proyectos" });
   }
 };
-// obtener varias
+
+// Obtener todos los Proyectoss
 ctrlProyecto.obtenerProyectos = async (req, res) => {
   try {
-    const Proyectos = await Proyecto.findAll({
-      where: {
-        estado: true,
-      },
-    });
-
-    return res.json(Proyectos);
+    const proyecto = await Proyecto.findAll(); // Utiliza 'Proyectoss' en lugar de 'Proyectos' para la variable
+    res.json(proyecto);
   } catch (error) {
-    console.log("Error al obtener los Proyectos", error);
-    return res.status(500).json({
-      message: "Error al obtener los Proyectos",
-    });
+    console.error("Error al obtener los Proyectos", error);
+    res.status(500).json({ message: "Error al obtener los Proyectos" });
   }
 };
-//obter una
+
+// Obtener un Proyectos por ID
 ctrlProyecto.obtenerProyecto = async (req, res) => {
   try {
-    const { id } = req.params;
-    const Proyecto = await Proyecto.findByPk(id);
-    return res.json(Proyecto);
+    const proyecto = await Proyecto.findByPk(req.params.id);
+    if (proyecto) {
+      res.json(proyecto);
+    } else {
+      res.status(404).json({ message: "Proyectos no encontrado" });
+    }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Error al obtener el Proyecto",
-    });
+    console.error("Error al obtener el Proyectos", error);
+    res.status(500).json({ message: "Error al obtener el Proyectos" });
   }
 };
-
 module.exports = ctrlProyecto;

@@ -5,10 +5,14 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
 require("dotenv").config();
-// Se conecta la Base de Datos
-const { conectarDB } = require("./database");
+const sequelize = require("./models/relaciones");
 
-conectarDB();
+//Base de datos
+
+sequelize
+  .authenticate()
+  .then(() => console.log("Base de datos conectada"))
+  .catch((err) => console.error(err));
 
 const app = express();
 const port = process.env.PORT || 4500;

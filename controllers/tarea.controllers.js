@@ -1,54 +1,40 @@
-const tarea = require("../models/tareas");
-const ctrltarea = {};
+const Tarea = require("../models/tareas");
+const ctrlTarea = {};
 
-// Crear
-ctrltarea.crearTarea = async (req, res) => {
-  const { designacion, detalle } = req.body;
-
+// Crear un Tareas
+ctrlTarea.crearTarea = async (req, res) => {
   try {
-    const newTarea = new Tarea({
-      designacion,
-      detalle,
-    });
-
-    // Se guarda en la BD
-    await newTarea.save();
-
-    return res.status(201).json({ message: "tarea creada con éxito" });
+    const newTarea = await Tarea.create(req.body);
+    res.status(201).json(newTarea);
   } catch (error) {
-    console.log("Error al crear  el tarea", error);
-    return res.status(500).json({ message: "Error al crear  al tarea" });
-  }
-};
-// obtener varias
-ctrltarea.obtenerTareas = async (req, res) => {
-  try {
-    const tareas = await tarea.findAll({
-      where: {
-        estado: true,
-      },
-    });
-
-    return res.json(tareas);
-  } catch (error) {
-    console.log("Error al obtener los tareas", error);
-    return res.status(500).json({
-      message: "Error al obtener los tareas",
-    });
-  }
-};
-//obter una
-ctrltarea.obtenerTarea = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const tarea = await tarea.findByPk(id);
-    return res.json(tarea);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Error al obtener el tarea",
-    });
+    console.error("Error al crear el Tareas", error);
+    res.status(500).json({ message: "Error al crear el Tareas" });
   }
 };
 
-module.exports = ctrltarea;
+// Obtener todos los Tareass
+ctrlTarea.obtenerTareas = async (req, res) => {
+  try {
+    const tarea = await Tarea.findAll(); // Utiliza 'Tareass' en lugar de 'Tareas' para la variable
+    res.json(tarea);
+  } catch (error) {
+    console.error("Error al obtener los Tareas", error);
+    res.status(500).json({ message: "Error al obtener los Tareas" });
+  }
+};
+
+// Obtener un Tareas por ID
+ctrlTarea.obtenerTarea = async (req, res) => {
+  try {
+    const tarea = await Tarea.findByPk(req.params.id);
+    if (tarea) {
+      res.json(tarea);
+    } else {
+      res.status(404).json({ message: "Tareas no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al obtener el Tareas", error);
+    res.status(500).json({ message: "Error al obtener el Tareas" });
+  }
+};
+module.exports = ctrlTarea;

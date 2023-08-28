@@ -11,17 +11,7 @@ const sequelize = new Sequelize(
   }
 );
 
-const conectarDB = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("Base de datos Conectada");
-  } catch (error) {
-    console.log("ERROR AL CONECTAR DB: ", error);
-  }
-};
-
 module.exports = {
   sequelize,
   DataTypes,
-  conectarDB,
 };
